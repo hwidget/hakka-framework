@@ -10,15 +10,19 @@
         </Console>
         <RollingFile name="RollingFile" fileName="${filename}" filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
-            <SizeBasedTriggeringPolicy size="50MB"/>
             <Policies>
-                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50MB"/>
+                <TimeBasedTriggeringPolicy/>
             </Policies>
         </RollingFile>
-
-        <Async name="AsyncOut">
-            <AppenderRef ref="RollingFile"/>
-        </Async>
+        <!--<RandomAccessFile name="RandomAccessFile" fileName="${filename}" immediateFlush="false" append="true">-->
+            <!--<PatternLayout>-->
+                <!--<Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>-->
+            <!--</PatternLayout>-->
+        <!--</RandomAccessFile>-->
+        <!--<Async name="AsyncOut" >-->
+            <!--<AppenderRef ref="RollingFile"/>-->
+        <!--</Async>-->
     </Appenders>
     <Loggers>
         <!--隐藏Hibernate的参数问号警告-->
@@ -27,19 +31,16 @@
 
         </Logger>
 
-        <Logger name="org.apache.spark" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
 
         <!--项目下的日志输出到文件-->
-        <Logger name="com.ryan.akka" level="debug" additivity="false">
-            <AppenderRef ref="AsyncOut"/>
-            <AppenderRef ref="Console"/>
-        </Logger>
+        <!--<AsyncRoot level="info" additivity="false" includeLocation="true">-->
+            <!--<AppenderRef ref="AsyncOut"/>-->
+            <!--<AppenderRef ref="Console"/>-->
+        <!--</AsyncRoot>-->
 
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AsyncOut" />
+            <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
 </Configuration>
