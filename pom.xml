@@ -166,7 +166,12 @@
         <junit.version>4.12</junit.version>
         <log4j.version>2.5</log4j.version>
 
-        <akka.version>2.4.12</akka.version>
+        <akka.version>2.4.16</akka.version>
+        <akka.stream.version>2.4.16</akka.stream.version>
+
+
+        <akka.http.version>10.0.1</akka.http.version>
+
         <akka.scala.version>2.11</akka.scala.version>
 
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
@@ -236,6 +241,15 @@
             <version>${akka.version}</version>
         </dependency>
 
+        <!--==========================  Akka Http Jar Package ==============================================-->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-http_${akka.scala.version}</artifactId>
+            <version>${akka.http.version}</version>
+        </dependency>
+
+
+
 
 
 
@@ -244,6 +258,12 @@
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-stream-kafka_${akka.scala.version}</artifactId>
             <version>0.13</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.typesafe.akka</groupId>
+                    <artifactId>akka-stream_2.11</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -254,7 +274,20 @@
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <verbose/>
+                        <bootclasspath>${java.home}\lib\rt.jar;${java.home}\lib\jce.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
