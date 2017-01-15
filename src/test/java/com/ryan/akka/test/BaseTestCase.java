@@ -30,7 +30,7 @@ public class BaseTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
 
-    private ActorSystem actorSystem = null;
+    protected ActorSystem actorSystem = null;
 
     @Before
     public void setUp() throws Exception {
